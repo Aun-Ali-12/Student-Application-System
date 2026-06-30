@@ -1,5 +1,7 @@
 "use client";
 
+import { FetchCampus, InsertStudents } from "@/SupabaseApi/FetchCampus";
+
 import { useEffect, useState } from "react";
 
 function Form() {
@@ -9,20 +11,50 @@ function Form() {
     email: "",
     phone: "",
     course: "",
+    campus_id: "",
   });
+  const [campuses, setCampuses] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(form);
-  }, [form]);
+    async function loadCampus() {
+      const response = await FetchCampus();
+      setCampuses(response || []);
+    }
+    loadCampus();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await InsertStudents(form);
+      if (response) {
+        alert("Data is submitted");
+        setForm({
+          name: "",
+          cnic: "",
+          email: "",
+          phone: "",
+          course: "",
+          campus_id: "",
+        });
+      }
+    } catch (err) {
+      console.log("didn't get the response from function", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* name input  */}
         <label htmlFor="name">Enter your name:</label>
         <input
@@ -31,6 +63,7 @@ function Form() {
           name="name"
           value={form.name}
           onChange={handleChange}
+          required
         />
         <br />
 
@@ -42,6 +75,7 @@ function Form() {
           name="cnic"
           value={form.cnic}
           onChange={handleChange}
+          required
         />
         <br />
 
@@ -53,6 +87,7 @@ function Form() {
           name="email"
           value={form.email}
           onChange={handleChange}
+          required
         />
         <br />
 
@@ -64,6 +99,7 @@ function Form() {
           name="phone"
           value={form.phone}
           onChange={handleChange}
+          required
         />
         <br />
 
@@ -74,6 +110,7 @@ function Form() {
           id="course"
           value={form.course}
           onChange={handleChange}
+          required
         >
           <option value="">select your course</option>
           <option value="ai and chatbot development">
@@ -86,7 +123,27 @@ function Form() {
         </select>
         <br />
 
-        <button type="submit">submit</button>
+        {/* campus input  */}
+        <label htmlFor="campus">Enter your course:</label>
+        <select
+          name="campus_id"
+          id="campus"
+          value={form.campus_id}
+          onChange={handleChange}
+          required
+        >
+          <option value="">select your campus</option>
+
+          {campuses &&
+            campuses.map((val) => (
+              <option key={val.id} value={val.id}>
+                {val.name}
+              </option>
+            ))}
+        </select>
+        <br />
+
+        <button type="submit">{loading ? "submitting..." : "submit"}</button>
       </form>
     </>
   );
