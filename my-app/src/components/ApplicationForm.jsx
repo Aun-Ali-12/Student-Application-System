@@ -63,6 +63,7 @@ function Form() {
           name="name"
           value={form.name}
           onChange={handleChange}
+          placeholder="enter your name"
           required
         />
         <br />
@@ -75,6 +76,7 @@ function Form() {
           name="cnic"
           value={form.cnic}
           onChange={handleChange}
+          placeholder="enter your cnic"
           required
         />
         <br />
@@ -87,6 +89,7 @@ function Form() {
           name="email"
           value={form.email}
           onChange={handleChange}
+          placeholder="enter your email"
           required
         />
         <br />
@@ -99,6 +102,7 @@ function Form() {
           name="phone"
           value={form.phone}
           onChange={handleChange}
+          placeholder="enter your phone"
           required
         />
         <br />

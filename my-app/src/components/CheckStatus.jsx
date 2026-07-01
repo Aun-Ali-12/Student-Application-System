@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 export default function CheckStatus() {
-  const [cnic, setCnic] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [result, setResult] = useState(null);
+  const [cnic, setCnic] = useState(""); //manages user input
+  const [loading, setLoading] = useState(false); //loading state
+  const [error, setError] = useState(""); //handle error
+  const [result, setResult] = useState(null); //handle applicant's data
 
   const handleCheck = async (e) => {
     e.preventDefault();
@@ -21,6 +21,7 @@ export default function CheckStatus() {
       });
 
       const json = await response.json();
+      console.log(json, "json ka variable");
 
       if (!response.ok) {
         setError(json.error);
@@ -41,13 +42,13 @@ export default function CheckStatus() {
         <form onSubmit={handleCheck}>
           <input
             type="text"
-            placeholder="CNIC daalo"
+            placeholder="enter your cnic"
             value={cnic}
             onChange={(e) => setCnic(e.target.value)}
             required
           />
           <button type="submit">
-            {loading ? "Check ho raha hai..." : "Status Check Karo"}
+            {loading ? "loading..." : "Check status"}
           </button>
         </form>
 
@@ -57,6 +58,7 @@ export default function CheckStatus() {
           <div>
             <p>Name: {result.full_name}</p>
             <p>Status: {result.status}</p>
+            <p>Course: {result.course}</p>
           </div>
         )}
       </div>
