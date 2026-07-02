@@ -19,12 +19,12 @@ export default function CheckStatus() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cnic }),
       });
+      console.log(response);
 
       const json = await response.json();
-      console.log(json, "json ka variable");
 
       if (!response.ok) {
-        setError(json.error);
+        setError("Student not found!");
       } else {
         setResult(json.data);
       }

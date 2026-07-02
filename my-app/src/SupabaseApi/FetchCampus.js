@@ -1,5 +1,6 @@
 import supabase from "@/lib/supabase";
 
+
 //Fetch Campus
 export async function FetchCampus() {
   try {

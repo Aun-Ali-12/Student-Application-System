@@ -1,6 +1,7 @@
-import supabase from "@/lib/supabase";
+import { createClient } from "@/lib/ClientSupabase";
+const supabase = createClient();
 
-export default async function LoginAuth(email, pass) {
+export async function LoginAuth(email, pass) {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
@@ -12,5 +13,17 @@ export default async function LoginAuth(email, pass) {
     return { success: true, data };
   } catch (err) {
     return { success: false, error: "Something went wrong" };
+  }
+}
+
+export async function LogOut() {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.log(err);
   }
 }

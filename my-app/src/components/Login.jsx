@@ -1,22 +1,14 @@
 "use client";
 
-import LoginAuth from "@/SupabaseApi/Login";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { LoginAuth } from "@/SupabaseApi/Login";
+import { useState } from "react";
 
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
     pass: "",
   });
-  const [error, setError] = useState("");
-  const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
-
-useEffect(()=>{
-console.log(result);
-}, [result])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,13 +18,14 @@ console.log(result);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-      const response = await LoginAuth(form.email, form.pass);
-      if (!response.success) {
-        setError(response.error);
-      } else {
-        router.push('/dashboard')
-      }
-      setLoading(false)
+    const response = await LoginAuth(form.email, form.pass);
+    console.log(response);
+    if (!response.success) {
+      setError(response.error);
+    } else {
+      window.location.replace("/dashboard");
+    }
+    setLoading(false);
   };
 
   return (
@@ -59,7 +52,7 @@ console.log(result);
         />
         <br />
 
-        <button type="submit">{loading? "loading...": "login"}</button>
+        <button type="submit">{loading ? "loading..." : "login"}</button>
       </form>
     </>
   );
