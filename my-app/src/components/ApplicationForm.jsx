@@ -19,7 +19,7 @@ function Form() {
   useEffect(() => {
     async function loadCampus() {
       const response = await FetchCampus();
-      setCampuses(response || []);
+      setCampuses(response.data || []);
     }
     loadCampus();
   }, []);

@@ -6,6 +6,7 @@ export default function Dashboard() {
   const handleLogOut = async () => {
     const response = await LogOut();
     if (!response) {
+      alert("Logout failed, please try again");
       return;
     }
     alert("logging out");
