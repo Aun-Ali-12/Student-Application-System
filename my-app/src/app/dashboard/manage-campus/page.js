@@ -1,5 +1,11 @@
-import ClientCampus from "@/components/DashboardComponent/ClientCampus";
+import ManageAdmins from "@/components/DashboardComponent/ManageAdmin";
+import ClientCampus from "@/components/DashboardComponent/ManageCampuses";
 
 export default function ManageCampus() {
-  return <ClientCampus />;
+  return (
+    <>
+      <ClientCampus />
+      <ManageAdmins />
+    </>
+  );
 }
