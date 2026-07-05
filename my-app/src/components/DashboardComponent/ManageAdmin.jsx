@@ -1,6 +1,7 @@
 "use client";
 import { FetchCampus } from "@/SupabaseApi/FetchCampus";
 import { useEffect, useState } from "react";
+import { AdminCard } from "./AdminCard";
 
 export default function ManageAdmins() {
   const [campuses, setCampuses] = useState([]);
@@ -14,6 +15,8 @@ export default function ManageAdmins() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [isCreateAdmin, setIsCreateAdmin] = useState(false);
+  const [showAdmins, setShowAdmins] = useState(false);
+  const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
     async function loadCampus() {
@@ -22,6 +25,10 @@ export default function ManageAdmins() {
     }
     loadCampus();
   }, []);
+
+  useEffect(() => {
+    console.log(admins);
+  }, [admins]);
 
   const CreateAdmin = async (e) => {
     e.preventDefault();
@@ -67,9 +74,25 @@ export default function ManageAdmins() {
     setAdminForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  //handle manage admins
+  const handleManageAdmins = async () => {
+    setShowAdmins(!showAdmins);
+    setAdmins([]);
+    const response = await fetch("/api/get-admins");
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.error);
+      return;
+    }
+    //filters only campus admins, removes super admin
+    const campusAdmins = json.success.filter((r) => r.role !== "super admin");
+    setAdmins(campusAdmins);
+  };
+
   return (
     <>
-      <h1>Manage Admins</h1>
+      <h1>-- Manage Admins Section</h1>
       <div>
         <button
           onClick={() => {
@@ -146,6 +169,17 @@ export default function ManageAdmins() {
             {success && <p>{success}</p>}
           </>
         )}
+      </div>
+
+      {/* admin card component */}
+      <div>
+        <button onClick={handleManageAdmins}>Manage Admin</button>
+        {showAdmins &&
+          admins.map((a) => (
+            <ul key={a.admin_id}>
+              <AdminCard data={a} />
+            </ul>
+          ))}
       </div>
     </>
   );
