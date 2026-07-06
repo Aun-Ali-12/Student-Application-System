@@ -2,6 +2,11 @@
 import { FetchCampus } from "@/SupabaseApi/FetchCampus";
 import { useEffect, useState } from "react";
 import { AdminCard } from "./AdminCard";
+import {
+  CreateAdminFunc,
+  DeleteAdmins,
+  FetchAdmins,
+} from "@/SupabaseApi/Dashboard/ManageAdmins";
 
 export default function ManageAdmins() {
   const [campuses, setCampuses] = useState([]);
@@ -16,7 +21,18 @@ export default function ManageAdmins() {
   const [loading, setLoading] = useState(false);
   const [isCreateAdmin, setIsCreateAdmin] = useState(false);
   const [showAdmins, setShowAdmins] = useState(false);
-  const [admins, setAdmins] = useState([]);
+  const [admins, setAdmins] = useState([]); //stores admins data after getting response from api
+  const [editData, setEditData] = useState({
+    id: null,
+    name: "",
+    campus_id: null,
+  });
+  const [editMode, setEditMode] = useState(false);
+
+  async function loadAdmins() {
+    const response = await FetchAdmins();
+    setAdmins(response.success || []);
+  }
 
   useEffect(() => {
     async function loadCampus() {
@@ -24,18 +40,31 @@ export default function ManageAdmins() {
       setCampuses(response.data || []);
     }
     loadCampus();
+    loadAdmins();
   }, []);
 
   useEffect(() => {
     console.log(admins);
   }, [admins]);
 
+  //admin data values setting on onchange handle
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (editMode) {
+      setEditData((prev) => ({ ...prev, [name]: value }));
+    }
+
+    if (!editMode) {
+      setAdminForm((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
   const CreateAdmin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     setSuccess("");
-
     //validation check
     if (
       !adminForm.name ||
@@ -48,46 +77,45 @@ export default function ManageAdmins() {
       return;
     }
 
-    //response after fetching api route of create admin
-    const response = await fetch("/api/create-admin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(adminForm),
-    });
-
-    const json = await response.json();
-    console.log(json);
-
-    if (!response.ok) {
-      setError(json.error);
+    const response = await CreateAdminFunc(adminForm);
+    if (!response) {
+      setError(response.error);
       setLoading(false);
       return;
-    } else {
-      setSuccess("admin successfully created");
     }
+    setSuccess("Admin has been created successfully!");
     setLoading(false);
-  };
-
-  //admin data values setting on onchange handle
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAdminForm((prev) => ({ ...prev, [name]: value }));
   };
 
   //handle manage admins
   const handleManageAdmins = async () => {
     setShowAdmins(!showAdmins);
-    setAdmins([]);
-    const response = await fetch("/api/get-admins");
-    const json = await response.json();
+    setError("");
+    await loadAdmins(); //fetch admins
+  };
 
-    if (!response.ok) {
-      console.log(json.error);
+  const handleDel = async (id) => {
+    const response = await DeleteAdmins(id);
+
+    if (!response) {
+      console.log("Not deleted");
       return;
     }
-    //filters only campus admins, removes super admin
-    const campusAdmins = json.success.filter((r) => r.role !== "super admin");
-    setAdmins(campusAdmins);
+    console.log("deleted!");
+    await loadAdmins();
+  };
+
+  //handle Edit:
+  const handleEdit = (admin_id, name, campus_id) => {
+    console.log(admin_id, name, campus_id);
+    setEditMode(true);
+    setIsCreateAdmin(true); // to open form
+    setEditData({
+      id: admin_id,
+      name: name,
+      campus_id: campus_id,
+    });
+
   };
 
   return (
@@ -113,7 +141,7 @@ export default function ManageAdmins() {
                 name="name"
                 placeholder="admin name?"
                 onChange={handleChange}
-                value={adminForm.name}
+                value={editMode ? editData.name : adminForm.name}
               />
               <br />
 
@@ -147,7 +175,7 @@ export default function ManageAdmins() {
                 name="campus_id"
                 id="adminCampus"
                 onChange={handleChange}
-                value={adminForm.campus_id}
+                value={editMode ? editData.campus_id : adminForm.campus_id}
               >
                 <option value="" disabled>
                   select admin campus
@@ -162,7 +190,7 @@ export default function ManageAdmins() {
               <br />
 
               <button type="submit">
-                {loading ? "loading..." : "Create admin"}
+                {editMode ? "Update" : "Create admin"}
               </button>
             </form>
             {error && <p>{error}</p>}
@@ -174,12 +202,32 @@ export default function ManageAdmins() {
       {/* admin card component */}
       <div>
         <button onClick={handleManageAdmins}>Manage Admin</button>
-        {showAdmins &&
-          admins.map((a) => (
-            <ul key={a.admin_id}>
-              <AdminCard data={a} />
-            </ul>
-          ))}
+        <table className="border-collapse border border-grey-400 w-full">
+          {showAdmins && (
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-4 py-2">Name</th>
+                <th className="border border-gray-300 px-4 py-2">
+                  Campus name
+                </th>
+                <th className="border border-gray-300 px-4 py-2">actions</th>
+              </tr>
+            </thead>
+          )}
+          <tbody>
+            {showAdmins &&
+              admins.map((a) => (
+                <AdminCard
+                  key={a.admin_id}
+                  data={a}
+                  handleDel={handleDel}
+                  handleEdit={handleEdit}
+                />
+              ))}
+          </tbody>
+        </table>
+        {error && <p>{error}</p>}
+        {success && <p>{success}</p>}
       </div>
     </>
   );

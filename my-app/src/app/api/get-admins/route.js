@@ -9,7 +9,7 @@ export async function GET() {
   try {
     const { data, error } = await supabaseAdmin
       .from("admin_profiles")
-      .select("campuses(name), role, admin_id");
+      .select("campuses(name), campus_id, role, admin_id, name");
 
     if (error) {
       return Response.json({ error: error.message }, { status: 400 });
