@@ -25,6 +25,38 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/login");
   }
+  console.log(user);
 
-  return <Dashboard />;
+  //fetching admin profile data
+  const { data: profile } = await supabase
+    .from("admin_profiles")
+    .select("name, role, campus_id, campuses(name) ")
+    .eq("admin_id", user.id)
+    .single();
+
+  // if(profile) console.log(profile);//return obj
+
+  //if super admin
+  let students;
+  if (profile.role === "super admin") {
+    const { data, error } = await supabase.from("students").select("*");
+    students = data || [];
+  } else {
+    const { data, error } = await supabase
+      .from("students")
+      .select("*")
+      .eq("campus_id", profile.campus_id);
+
+    students = data || [];
+  }
+
+  return (
+    <>
+      <Dashboard
+        data={students}
+        // role={profile.role}
+        // campusName={profile.campuses?.name || "All Campuses"}
+      />
+    </>
+  );
 }

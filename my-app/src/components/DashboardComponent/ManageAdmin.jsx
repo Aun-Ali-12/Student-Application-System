@@ -5,6 +5,7 @@ import { AdminCard } from "./AdminCard";
 import {
   CreateAdminFunc,
   DeleteAdmins,
+  EditAdmin,
   FetchAdmins,
 } from "@/SupabaseApi/Dashboard/ManageAdmins";
 
@@ -25,6 +26,8 @@ export default function ManageAdmins() {
   const [editData, setEditData] = useState({
     id: null,
     name: "",
+    email: "",
+    password: "",
     campus_id: null,
   });
   const [editMode, setEditMode] = useState(false);
@@ -65,26 +68,52 @@ export default function ManageAdmins() {
     setLoading(true);
     setError("");
     setSuccess("");
-    //validation check
-    if (
-      !adminForm.name ||
-      !adminForm.email ||
-      !adminForm.password ||
-      !adminForm.campus_id
-    ) {
-      alert("Add all fields");
-      setLoading(false);
-      return;
+
+    //editmode false:
+    if (!editMode) {
+      //validation check
+      if (
+        !adminForm.name ||
+        !adminForm.email ||
+        !adminForm.password ||
+        !adminForm.campus_id
+      ) {
+        alert("Add all fields");
+        setLoading(false);
+        return;
+      }
+      const response = await CreateAdminFunc(adminForm);
+      if (!response) {
+        setError(response.error);
+        setLoading(false);
+        return;
+      }
+      setSuccess("Admin has been created successfully!");
     }
 
-    const response = await CreateAdminFunc(adminForm);
-    if (!response) {
-      setError(response.error);
-      setLoading(false);
-      return;
+    //editmode true:
+    if (editMode) {
+      //validation check
+      if (
+        !editData.name ||
+        !editData.email ||
+        !editData.password ||
+        !editData.campus_id
+      ) {
+        alert("Add all fields");
+        setLoading(false);
+        return;
+      }
+      const response = await EditAdmin(editData);
+      if (!response) {
+        alert(response.error);
+        return;
+      }
+      alert(response.success);
     }
-    setSuccess("Admin has been created successfully!");
     setLoading(false);
+    setIsCreateAdmin(false);
+    setEditMode(false);
   };
 
   //handle manage admins
@@ -113,9 +142,10 @@ export default function ManageAdmins() {
     setEditData({
       id: admin_id,
       name: name,
+      email: "",
+      password: "",
       campus_id: campus_id,
     });
-
   };
 
   return (
@@ -153,7 +183,7 @@ export default function ManageAdmins() {
                 name="email"
                 placeholder="admin@gmail.com"
                 onChange={handleChange}
-                value={adminForm.email}
+                value={editMode ? editData.email : adminForm.email}
               />
               <br />
 
@@ -165,7 +195,7 @@ export default function ManageAdmins() {
                 name="password"
                 placeholder="admin password?"
                 onChange={handleChange}
-                value={adminForm.password}
+                value={editMode ? editData.password : adminForm.password}
               />
               <br />
 
@@ -189,9 +219,15 @@ export default function ManageAdmins() {
               </select>
               <br />
 
-              <button type="submit">
-                {editMode ? "Update" : "Create admin"}
-              </button>
+              {editMode ? (
+                <button type="submit">
+                  {loading ? "updating.." : "Update"}
+                </button>
+              ) : (
+                <button type="submit">
+                  {loading ? "creating admin" : " Create Admin"}
+                </button>
+              )}
             </form>
             {error && <p>{error}</p>}
             {success && <p>{success}</p>}
@@ -201,7 +237,9 @@ export default function ManageAdmins() {
 
       {/* admin card component */}
       <div>
-        <button onClick={handleManageAdmins}>Manage Admin</button>
+        <button onClick={handleManageAdmins}>
+          {showAdmins ? "Close" : "Manage Admin"}
+        </button>
         <table className="border-collapse border border-grey-400 w-full">
           {showAdmins && (
             <thead>

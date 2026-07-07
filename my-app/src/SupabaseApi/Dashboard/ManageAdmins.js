@@ -55,3 +55,23 @@ export async function DeleteAdmins(id) {
     return { error: "something went wrong!" };
   }
 }
+
+export async function EditAdmin(editData) {
+  try {
+    const response = await fetch("/api/edit-admins", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editData),
+    });
+
+    const json = await response.json();
+    console.log(json);
+
+    if (!response.ok) {
+      return { error: json.error };
+    }
+    return { success: json.success };
+  } catch (err) {
+    return { error: "something went wrong!" };
+  }
+}
