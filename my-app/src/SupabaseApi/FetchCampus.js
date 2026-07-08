@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/ClientSupabase";
-const supabase = createClient()
+const supabase = createClient();
 
 //Fetch Campus
 export async function FetchCampus() {
@@ -29,11 +29,11 @@ export async function InsertStudents(form) {
     });
     if (error) {
       console.log(error.message);
-      return null;
+      return { error: error.message };
     }
-    return true;
+    return { success: true };
   } catch (err) {
     console.log("error in insert students", err);
-    return null;
+    return { error: "something wen't wrong!" };
   }
 }
