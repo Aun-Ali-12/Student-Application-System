@@ -1,5 +1,8 @@
-export const StdData = ({ data, UpdateStatus, handleDel, handleEdit }) => {
+import { useEdit } from "@/ContextApi/Edit";
+
+export const StdData = ({ data, UpdateStatus, handleDel }) => {
   const { id, full_name, cnic, email, phone, course, status, campuses } = data;
+  const { handleEditStd } = useEdit();
   return (
     <>
       <tr>
@@ -42,7 +45,7 @@ export const StdData = ({ data, UpdateStatus, handleDel, handleEdit }) => {
             <br />
             <button
               onClick={() => {
-                handleEdit(data);
+                handleEditStd(data);
               }}
             >
               edit

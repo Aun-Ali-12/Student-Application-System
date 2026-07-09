@@ -1,23 +1,24 @@
+import { useEdit } from "@/ContextApi/Edit";
+
 export const FormUI = ({
   form,
-  editData,
   handleChange,
   handleSubmit,
   campuses,
   loading,
-  isEdit,
 }) => {
+  const { editData, isEdit, setIsEdit, resetEdit } = useEdit();
   return (
     <>
       Form
       <form onSubmit={handleSubmit}>
         {/* name input  */}
-        <label htmlFor="name">Enter your name:</label>
+        <label htmlFor="full_name">Enter your name:</label>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={isEdit ? editData.full_name : form.name}
+          id="full_name"
+          name="full_name"
+          value={isEdit ? editData.full_name : form.full_name}
           onChange={handleChange}
           placeholder="enter your name"
           required
@@ -103,7 +104,21 @@ export const FormUI = ({
         </select>
         <br />
 
-        <button type="submit">{loading ? "submitting..." : "submit"}</button>
+        {isEdit ? (
+          <>
+            <button type="submit">{loading ? "updating..." : "update"}</button>
+            <button
+              type="button"
+              onClick={() => {
+                (setIsEdit(false), resetEdit());
+              }}
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button type="submit">{loading ? "submitting..." : "submit"}</button>
+        )}
       </form>
     </>
   );

@@ -37,3 +37,28 @@ export async function InsertStudents(form) {
     return { error: "something wen't wrong!" };
   }
 }
+
+//Updates Student in students table
+export async function UpdateStudents(editData) {
+  try {
+    const { data, error } = await supabase
+      .from("students")
+      .update({
+        full_name: editData.name,
+        cnic: editData.cnic,
+        email: editData.email,
+        phone: editData.phone,
+        course: editData.course,
+        campus_id: editData.campus_id,
+      })
+      .eq("id", editData.id);
+
+    if (error) {
+      return { error: error.message };
+    }
+    return { success: true };
+  } catch (err) {
+    // console.log("error in updating students", err);
+    return { error: "something wen't wrong!" };
+  }
+}

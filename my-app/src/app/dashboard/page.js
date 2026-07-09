@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import Dashboard from "@/components/DashboardComponent/ClientDashboard";
-
+import { useStudent } from "@/ContextApi/StudentData";
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -38,7 +38,9 @@ export default async function DashboardPage() {
   //if super admin
   let students;
   if (profile.role === "super_admin") {
-    const { data } = await supabase.from("students").select("*, campuses(name)");
+    const { data } = await supabase
+      .from("students")
+      .select("*, campuses(name)");
     students = data || [];
   } else {
     const { data, error } = await supabase
@@ -52,9 +54,9 @@ export default async function DashboardPage() {
   return (
     <>
       <Dashboard
-        data={students}
+        studentData={students}
         role={profile.role}
-        campusName={profile.campuses?.name || 'All Campuses'}
+        campusName={profile.campuses?.name || "All Campuses"}
       />
     </>
   );

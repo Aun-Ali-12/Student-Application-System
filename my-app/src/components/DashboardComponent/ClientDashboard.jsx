@@ -7,19 +7,20 @@ import {
   UpdateStudentStatus,
 } from "@/SupabaseApi/Dashboard/ManageApplication";
 import { useEffect, useState } from "react";
+import { useEdit } from "@/ContextApi/Edit";
 import { FormUI } from "../Form";
+import { useStudentForm } from "@/hooks/StudentForm";
+import { useStudent } from "@/ContextApi/StudentData";
 
-export default function Dashboard({ data, role, campusName }) {
-  const [students, setStudents] = useState(data); //student data getting from server component
-  const [editData, setEditData] = useState({
-    id: null,
-    full_name: "",
-    email: "",
-    course: "",
-    cnic: "",
-    campus_id: null,
-  });
-  const [isEdit, setIsEdit] = useState(false);
+export default function Dashboard({ studentData, role, campusName }) {
+  const { isEdit } = useEdit();
+  const { form, campuses, loading, handleChange, handleSubmit } =
+    useStudentForm();
+  const { data, setData } = useStudent();
+
+  useEffect(() => {
+    setData(studentData || []);
+  }, []);
 
   const handleLogOut = async () => {
     const response = await LogOut();
@@ -41,7 +42,7 @@ export default function Dashboard({ data, role, campusName }) {
     }
     console.log(response.success);
     //updating state to render updated data in UI
-    setStudents((prev) =>
+    setData((prev) =>
       prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)),
     );
     alert("Status update successfully!");
@@ -55,21 +56,8 @@ export default function Dashboard({ data, role, campusName }) {
       return;
     }
     //updating state to render updated data in UI
-    setStudents((prev) => prev.filter((s) => s.id !== id));
+    setData((prev) => prev.filter((s) => s.id !== id));
     alert("Application deleted successfully");
-  };
-
-  const handleEdit = (data) => {
-    console.log(data);
-    setIsEdit(true);
-    setEditData({
-      id: data.id,
-      full_name: data.full_name,
-      email: data.email,
-      course: data.course,
-      cnic: data.cnic,
-      campus_id: data.campus_id,
-    });
   };
 
   return (
@@ -98,23 +86,34 @@ export default function Dashboard({ data, role, campusName }) {
           </tr>
         </thead>
         <tbody>
-          {students && students.length === 0 ? (
-            <p>No data found!</p>
+          {data && data.length === 0 ? (
+            <tr>
+              <td>No data found!</td>
+            </tr>
           ) : (
-            students.map((d) => (
+            data.map((d) => (
               <StdData
                 key={d.id}
                 data={d}
                 UpdateStatus={UpdateStatus}
                 handleDel={handleDel}
-                handleEdit={handleEdit}
               />
             ))
           )}
         </tbody>
       </table>
 
-      {/* {isEdit ? <FormUI editData={editData} isEdit={isEdit} /> : ""} */}
+      {isEdit ? (
+        <FormUI
+          form={form}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          campuses={campuses}
+          loading={loading}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 }
