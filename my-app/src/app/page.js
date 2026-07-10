@@ -1,4 +1,4 @@
-import Form from "@/components/ApplicationForm";
+import Form from "@/components/Representation/ApplicationFormRep";
 import supabase from "@/lib/supabase";
 
 export default function Home() {

@@ -1,8 +1,7 @@
 "use client";
-
 import { useState } from "react";
 
-export default function CheckStatus() {
+export default function useCheckStatus() {
   const [cnic, setCnic] = useState(""); //manages user input
   const [loading, setLoading] = useState(false); //loading state
   const [error, setError] = useState(""); //handle error
@@ -13,16 +12,17 @@ export default function CheckStatus() {
     setLoading(true);
     setError("");
     setResult(null);
+
+    //fetching response from api route:
     try {
       const response = await fetch("/api/check-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cnic }),
       });
-      console.log(response);
+      const json = await response.json(); //converts received response in to json format
 
-      const json = await response.json();
-
+      //error check
       if (!response.ok) {
         setError("Student not found!");
       } else {
@@ -35,33 +35,5 @@ export default function CheckStatus() {
     }
   };
 
-  return (
-    <>
-      Check status
-      <div>
-        <form onSubmit={handleCheck}>
-          <input
-            type="text"
-            placeholder="enter your cnic"
-            value={cnic}
-            onChange={(e) => setCnic(e.target.value)}
-            required
-          />
-          <button type="submit">
-            {loading ? "loading..." : "Check status"}
-          </button>
-        </form>
-
-        {error && <p>{error}</p>}
-
-        {result && (
-          <div>
-            <p>Name: {result.full_name}</p>
-            <p>Status: {result.status}</p>
-            <p>Course: {result.course}</p>
-          </div>
-        )}
-      </div>
-    </>
-  );
+  return { cnic, setCnic, loading, error, result, handleCheck };
 }

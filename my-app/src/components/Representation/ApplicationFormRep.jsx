@@ -1,6 +1,6 @@
 "use client";
 
-import { FormUI } from "./Form";
+import { FormUI } from "../Form";
 import { useStudentForm } from "@/hooks/StudentForm";
 
 function Form() {

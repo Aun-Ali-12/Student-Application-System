@@ -19,8 +19,8 @@ export async function FetchCampus() {
 //Insert Student in students table
 export async function InsertStudents(form) {
   try {
-    const { data, error } = await supabase.from("students").insert({
-      full_name: form.name,
+    const { error } = await supabase.from("students").insert({
+      full_name: form.full_name,
       cnic: form.cnic,
       email: form.email,
       phone: form.phone,
@@ -44,18 +44,20 @@ export async function UpdateStudents(editData) {
     const { data, error } = await supabase
       .from("students")
       .update({
-        full_name: editData.name,
+        full_name: editData.full_name,
         cnic: editData.cnic,
         email: editData.email,
         phone: editData.phone,
         course: editData.course,
         campus_id: editData.campus_id,
       })
-      .eq("id", editData.id);
-
+      .eq("id", editData.id)
+      .select();
     if (error) {
+      console.log(error.message);
       return { error: error.message };
     }
+    console.log(data, "data from update student");
     return { success: true };
   } catch (err) {
     // console.log("error in updating students", err);

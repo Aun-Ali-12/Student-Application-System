@@ -1,7 +1,10 @@
-import CheckStatus from "@/components/CheckStatus";
+import ApplicationStatusRep from "@/components/Representation/ApplicationStatusRep";
 
-export default function StatusPage(){
-return(
-    <><CheckStatus/></>
-)    
+export default function StatusPage() {
+  return (
+    //Application status checker representation component
+    <>
+      <ApplicationStatusRep />
+    </>
+  );
 }
