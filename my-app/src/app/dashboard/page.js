@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import Dashboard from "@/components/DashboardComponent/ClientDashboard";
+import Dashboard from "@/components/DashboardComponent/ClientDashboard/ClientDashboard";
 import { useStudent } from "@/ContextApi/StudentData";
 
 export default async function DashboardPage() {
