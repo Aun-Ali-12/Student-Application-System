@@ -1,13 +1,11 @@
 import { useStudent } from "@/ContextApi/StudentData";
 import { useStudentForm } from "@/hooks/StudentForm";
+import { exportToCSV } from "@/utility/StudentCSV";
 import { useEffect } from "react";
 
 export const Filters = () => {
-  const { filters, setFilters } = useStudent();
+  const { filters, filteredData, setFilters } = useStudent();
   const { campuses } = useStudentForm();
-  useEffect(() => {
-    console.log(campuses);
-  }, []);
 
   return (
     <>
@@ -62,6 +60,7 @@ export const Filters = () => {
             </option>
           ))}
       </select>
+
       {/* search bar */}
       <label htmlFor="search-std">Search by cnic</label>
       <input
@@ -74,6 +73,44 @@ export const Filters = () => {
           setFilters((prev) => ({ ...prev, search: e.target.value }));
         }}
       />
+
+      <button
+        type="button"
+        onClick={() => {
+          exportToCSV(filteredData);
+        }}
+      >
+        Download
+      </button>
+
+      {/* date filter  */}
+      {/* From  */}
+      <label htmlFor="from">
+        From:
+        <input
+          type="date"
+          name="from"
+          id="from"
+          value={filters.from}
+          onChange={(e) => {
+            setFilters((prev) => ({ ...prev, from: e.target.value }));
+          }}
+        />
+      </label>
+
+      {/* To */}
+      <label htmlFor="to">
+        to:
+        <input
+          type="date"
+          name="to"
+          id="to"
+          value={filters.to}
+          onChange={(e) => {
+            setFilters((prev) => ({ ...prev, to: e.target.value }));
+          }}
+        />
+      </label>
     </>
   );
 };

@@ -9,6 +9,8 @@ export const StudentProvider = ({ children }) => {
     campus_id: "",
     course: "",
     search: "",
+    from: "",
+    to: "",
   });
 
   const filteredData = data.filter((s) => {
@@ -17,6 +19,18 @@ export const StudentProvider = ({ children }) => {
     if (Number(filters.campus_id) && s.campus_id !== Number(filters.campus_id))
       return false;
     if (filters.search && !s.cnic.includes(filters.search)) return false;
+
+    if (filters.from) {
+      const dbDate = new Date(s.created_at).toLocaleDateString("en-CA");
+      const fromDate = filters.from;
+      if (fromDate > dbDate) return false;
+    }
+
+    if (filters.to) {
+      const dbDate = new Date(s.created_at).toLocaleDateString("en-CA");
+      const toDate = filters.to;
+      if (toDate < dbDate) return false;
+    }
     return true;
   });
   return (

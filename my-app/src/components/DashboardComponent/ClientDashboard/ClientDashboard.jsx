@@ -9,10 +9,11 @@ import { useStudentForm } from "@/hooks/StudentForm";
 import { FormUI } from "@/components/Form";
 import { Filters } from "./Filters";
 import { Pagination } from "./Pagination";
+import { usePagination } from "@/hooks/Dashboard/usePagination";
 
 export default function Dashboard({ studentData, role, campusName }) {
   //data from students context
-  const { data, filteredData, setData } = useStudent();
+  const { setData } = useStudent();
 
   //temporary handllogout from manage dashbaord hook
   const { handleLogOut } = ManageDashboard();
@@ -23,6 +24,16 @@ export default function Dashboard({ studentData, role, campusName }) {
 
   //useEdit context
   const { isEdit } = useEdit();
+
+  //paginated data
+  const {
+    PaginatedData,
+    currentPage,
+    setCurrentpage,
+    totalItems,
+    setTotalItems,
+    totalPages,
+  } = usePagination();
 
   useEffect(() => {
     setData(studentData || []);
@@ -59,17 +70,23 @@ export default function Dashboard({ studentData, role, campusName }) {
         </thead>
 
         <tbody>
-          {filteredData && filteredData.length === 0 ? (
+          {PaginatedData && PaginatedData.length === 0 ? (
             <tr>
               <td colSpan={8}>No data found!</td>
             </tr>
           ) : (
-            filteredData.map((d) => <StudentDataTable key={d.id} data={d} />)
+            PaginatedData.map((d) => <StudentDataTable key={d.id} data={d} />)
           )}
         </tbody>
       </table>
 
-      <Pagination />
+      <Pagination
+        currentPage={currentPage}
+        setCurrentpage={setCurrentpage}
+        totalPages={totalPages}
+        totalItems={totalItems}
+        setTotalItems={setTotalItems}
+      />
 
       {/* on edit mode  */}
       {isEdit ? (
