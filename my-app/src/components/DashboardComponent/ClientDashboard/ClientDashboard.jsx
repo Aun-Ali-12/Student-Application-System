@@ -25,6 +25,10 @@ export default function Dashboard({ studentData, role, campusName }) {
   //useEdit context
   const { isEdit } = useEdit();
 
+  useEffect(() => {
+    setData(studentData || []);
+  }, []);
+
   //paginated data
   const {
     PaginatedData,
@@ -34,10 +38,6 @@ export default function Dashboard({ studentData, role, campusName }) {
     setTotalItems,
     totalPages,
   } = usePagination();
-
-  useEffect(() => {
-    setData(studentData || []);
-  }, []);
 
   return (
     <>
@@ -83,9 +83,10 @@ export default function Dashboard({ studentData, role, campusName }) {
       <Pagination
         currentPage={currentPage}
         setCurrentpage={setCurrentpage}
-        totalPages={totalPages}
         totalItems={totalItems}
         setTotalItems={setTotalItems}
+        totalPages={totalPages}
+        PaginatedData={PaginatedData}
       />
 
       {/* on edit mode  */}

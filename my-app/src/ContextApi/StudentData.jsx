@@ -33,6 +33,7 @@ export const StudentProvider = ({ children }) => {
     }
     return true;
   });
+
   return (
     <StudentContext.Provider
       value={{ data, setData, filters, setFilters, filteredData }}

@@ -6,13 +6,12 @@ export function Pagination({
   totalPages,
   totalItems,
   setTotalItems,
+  PaginatedData,
 }) {
   return (
     <>
       <div>
         <select
-          name=""
-          id=""
           value={totalItems}
           onChange={(e) => {
             const value = e.target.value;
@@ -28,40 +27,50 @@ export function Pagination({
         </select>
       </div>
 
-      {totalItems !== "all" && (
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              setCurrentpage((prev) => prev - 1);
-            }}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
+      {totalItems !== "all" ||
+        (PaginatedData.length > totalItems && (
           <div className="flex gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => {
-                  setCurrentpage(page);
-                }}
-              >
-                {page}
-              </button>
-            ))}
+            <button
+              onClick={() => {
+                setCurrentpage((prev) => prev - 1);
+              }}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            <div className="flex gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      setCurrentpage(page);
+                    }}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
+            </div>
+            <button
+              onClick={() => {
+                setCurrentpage((prev) => prev + 1);
+              }}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+            <p>
+              Page {currentPage} out of {totalPages}
+            </p>
           </div>
-          <button
-            onClick={() => {
-              setCurrentpage((prev) => prev + 1);
-            }}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-          <p>
-            Page {currentPage} out of {totalPages}
-          </p>
-        </div>
+        ))}
+      {totalItems === "all" || PaginatedData.length < totalItems ? (
+        <p>
+          Showing {PaginatedData.length} items out of {PaginatedData.length}
+        </p>
+      ) : (
+        <p>Showing items: {PaginatedData.length}</p>
       )}
     </>
   );

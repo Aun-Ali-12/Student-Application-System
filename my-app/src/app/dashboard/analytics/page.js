@@ -1,9 +1,11 @@
-import { Chart } from "@/components/DashboardComponent/Analytics/Chart";
+import { AnalyticsRep } from "@/components/DashboardComponent/Analytics/Representation/AnalyticsRep";
+import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 
-export default function Analytics() {
+export default async function Analytics() {
+  const { students } = await getAdminData();
   return (
     <>
-      <Chart />
+      <AnalyticsRep studentData={students} />
     </>
   );
 }

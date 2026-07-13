@@ -1,7 +1,6 @@
 import { useStudent } from "@/ContextApi/StudentData";
 import { useStudentForm } from "@/hooks/StudentForm";
 import { exportToCSV } from "@/utility/StudentCSV";
-import { useEffect } from "react";
 
 export const Filters = () => {
   const { filters, filteredData, setFilters } = useStudent();
