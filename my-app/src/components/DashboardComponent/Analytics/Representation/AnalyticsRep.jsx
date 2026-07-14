@@ -2,7 +2,8 @@
 import { useEffect } from "react";
 import { PieCharts } from "../PieCharts";
 import { useStudent } from "@/ContextApi/StudentData";
-import { BarCharts } from "../BarChart";
+import { BarCharts } from "../BarCharts";
+import { LineCharts } from "../LineCharts";
 
 export function AnalyticsRep({ studentData }) {
   const { setData } = useStudent();
@@ -15,6 +16,7 @@ export function AnalyticsRep({ studentData }) {
     <>
       <PieCharts />
       <BarCharts />
+      <LineCharts />
     </>
   );
 }

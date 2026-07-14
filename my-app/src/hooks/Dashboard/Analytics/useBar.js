@@ -1,28 +1,18 @@
 import { useStudent } from "@/ContextApi/StudentData";
-import { useMemo } from "react";
 
-export function useCourseChartData() {
+export function useCourseBarChart() {
   const { data, filteredData, filters } = useStudent();
 
-  const chartData = useMemo(() => {
-    const finalData = filters.from || filters.to ? filteredData : data;
+  const chartsData = filters.from || filters.to ? filteredData : data;
 
-    if (!finalData || finalData.length === 0) return [];
+  // extracting courses using map method and then apply Set to remove duplicate values and then making it an array using spread operator
+  const courses = [...new Set(chartsData.map((c) => c.course))];
 
-    const counts = {};
+  //map on courses to take out unique course and give it as value of key named as "name"
+  const courseStats = courses.map((course) => ({
+    name: course,
+    value: chartsData.filter((c) => c.course === course).length, //filters out unique course in whole data and find length using .length
+  }));
 
-    finalData.forEach((student) => {
-      const course = student.course;
-      counts[course] = (counts[course] || 0) + 1;
-    });
-
-    return Object.entries(counts).map(([course, count]) => ({
-      course,
-      count,
-    }));
-  }, [data, filteredData, filters]);
-
-  return chartData;
+  return { courseStats };
 }
-
-export default useCourseChartData;
