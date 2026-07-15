@@ -4,6 +4,7 @@ export function useCourseBarChart() {
   const { data, filteredData, filters } = useStudent();
 
   const chartsData = filters.from || filters.to ? filteredData : data;
+  console.log(chartsData);
 
   // extracting courses using map method and then apply Set to remove duplicate values and then making it an array using spread operator
   const courses = [...new Set(chartsData.map((c) => c.course))];

@@ -4,6 +4,7 @@ import { PieCharts } from "../PieCharts";
 import { useStudent } from "@/ContextApi/StudentData";
 import { BarCharts } from "../BarCharts";
 import { LineCharts } from "../LineCharts";
+import { CampusBarCharts } from "../CampusBarCharts";
 
 export function AnalyticsRep({ studentData }) {
   const { setData } = useStudent();
@@ -14,9 +15,12 @@ export function AnalyticsRep({ studentData }) {
 
   return (
     <>
-      <PieCharts />
-      <BarCharts />
-      <LineCharts />
+      <div className="flex flex-wrap">
+        <PieCharts />
+        <BarCharts />
+        <LineCharts />
+        <CampusBarCharts />
+      </div>
     </>
   );
 }

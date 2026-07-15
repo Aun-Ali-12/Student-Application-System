@@ -27,7 +27,12 @@ export function BarCharts() {
         <Tooltip />
         {/* color explaination  */}
         <Legend />
-        <Bar dataKey="value" fill="#6366f1" name="Applications" />
+        <Bar
+          dataKey="value"
+          fill="#6366f1"
+          name="Application by courses"
+          barSize="40"
+        />
       </BarChart>
     </div>
   );
