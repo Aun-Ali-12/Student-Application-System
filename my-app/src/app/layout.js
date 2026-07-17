@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EditProvider } from "@/ContextApi/Edit";
 import { StudentProvider } from "@/ContextApi/StudentData";
-import { SideNav } from "@/components/DashboardComponent/Navbar/SideNav";
+import { Validator } from "@/components/DashboardComponent/Navbar/NavValidater/Validator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +26,11 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       {/* context provider and nav  */}
-      <body className="min-h-full flex">
+      <body>
         <StudentProvider>
           <EditProvider>
             <div>
-              <SideNav />
+              <Validator />
             </div>
             {children}
           </EditProvider>

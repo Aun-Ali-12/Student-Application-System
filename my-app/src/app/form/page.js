@@ -1,6 +1,6 @@
 import Form from "@/components/Representation/ApplicationFormRep";
 
-export default function Home() {
+export default function FormPage() {
   return (
     <>
       <Form />
