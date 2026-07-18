@@ -37,6 +37,7 @@ export async function getAdminData() {
     .eq("admin_id", user.id)
     .single();
 
+  let role = profile.role;
   let students;
   if (profile.role === "super_admin") {
     const { data } = await supabase
@@ -50,6 +51,5 @@ export async function getAdminData() {
       .eq("campus_id", profile.campus_id);
     students = data || [];
   }
-
   return { students, profile };
 }

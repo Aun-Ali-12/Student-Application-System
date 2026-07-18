@@ -1,9 +1,3 @@
-import Form from "@/components/Representation/ApplicationFormRep";
-
 export default function Home() {
-  return (
-    <>
-      <Form />
-    </>
-  );
+  return <>Home</>;
 }

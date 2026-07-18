@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EditProvider } from "@/ContextApi/Edit";
 import { StudentProvider } from "@/ContextApi/StudentData";
-import { Validator } from "@/components/DashboardComponent/Navbar/NavValidater/Validator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +27,7 @@ export default function RootLayout({ children }) {
       {/* context provider and nav  */}
       <body>
         <StudentProvider>
-          <EditProvider>
-            <div>
-              <Validator />
-            </div>
-            {children}
-          </EditProvider>
+          <EditProvider>{children}</EditProvider>
         </StudentProvider>
       </body>
     </html>

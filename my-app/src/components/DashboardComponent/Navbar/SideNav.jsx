@@ -1,17 +1,21 @@
 import Link from "next/link";
-export function SideNav() {
+
+export function SideNav({ role }) {
+  console.log(role);
+  
   const navItems = [
     {
       label: "Dashboard",
-      to: "/dashboard",
+      href: "/dashboard",
     },
     {
       label: "Analytics",
-      to: "/dashboard/analytics",
+      href: "/dashboard/analytics",
     },
     {
-      label: "Manage",
-      to: "/dashboard/manage-campus",
+      label: "manage",
+      href: "/dashboard/manage-campus",
+      superAdmin: true,
     },
   ];
 
@@ -19,12 +23,11 @@ export function SideNav() {
     <>
       <nav className="flex flex-col bg-gray-400 h-screen w-[25vw] text-white">
         Side Navbar
-        {navItems &&
-          navItems.map((nav) => (
-            <Link key={nav.label} href={nav.to}>
-              {nav.label}
-            </Link>
-          ))}
+        {navItems.filter((items) => !items.superAdmin || role === "super_admin")
+        .map((nav)=>(
+          <Link key={nav.label} href={nav.href}>{nav.label}</Link>
+        ))
+        }
       </nav>
     </>
   );

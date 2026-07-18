@@ -43,7 +43,13 @@ export function Navbar() {
           >
             Track
           </button>
-          <button onClick={router.push("/form")}>Apply now</button>
+          <button
+            onClick={() => {
+              router.push("/form");
+            }}
+          >
+            Apply now
+          </button>
         </div>
       </header>
     </>

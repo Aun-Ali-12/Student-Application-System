@@ -6,7 +6,7 @@ import { BarCharts } from "../BarCharts";
 import { LineCharts } from "../LineCharts";
 import { CampusBarCharts } from "../CampusBarCharts";
 
-export function AnalyticsRep({ studentData }) {
+export function AnalyticsRep({ studentData, role }) {
   const { setData } = useStudent();
 
   useEffect(() => {
@@ -15,11 +15,11 @@ export function AnalyticsRep({ studentData }) {
 
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-col">
         <PieCharts />
         <BarCharts />
         <LineCharts />
-        <CampusBarCharts />
+        {role === "super_admin" ? <CampusBarCharts /> : ""}
       </div>
     </>
   );

@@ -2,10 +2,10 @@ import { AnalyticsRep } from "@/components/DashboardComponent/Analytics/Represen
 import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 
 export default async function Analytics() {
-  const { students } = await getAdminData();
+  const { students, profile } = await getAdminData();
   return (
     <>
-      <AnalyticsRep studentData={students} />
+      <AnalyticsRep studentData={students} role={profile.role} />
     </>
   );
 }
