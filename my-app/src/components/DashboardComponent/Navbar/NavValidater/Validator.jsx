@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { SideNav } from "../SideNav";
-import { Navbar } from "@/components/Navbar/Navbar";
+import { Navbar } from "@/components/public/Navbar/Navbar";
 
 export function Validator() {
   // const notIncludedPaths = ["/", "/form", "/status", "/login"];
