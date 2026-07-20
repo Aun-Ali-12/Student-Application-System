@@ -1,4 +1,4 @@
-import Dashboard from "@/components/DashboardComponent/ClientDashboard/ClientDashboard";
+import Dashboard from "@/components/admin/DashboardComponent/ClientDashboard/ClientDashboard";
 import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 
 export default async function DashboardPage() {

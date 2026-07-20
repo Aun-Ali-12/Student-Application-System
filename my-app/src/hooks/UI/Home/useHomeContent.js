@@ -1,3 +1,16 @@
+import {
+  IconCode,
+  IconRobot,
+  IconBrandGoogle,
+  IconPalette,
+  IconShieldLock,
+  IconBrandFacebook,
+  IconBrandTwitter,
+  IconBrandLinkedin,
+  IconBrandInstagram,
+  IconBrandYoutube,
+} from "@tabler/icons-react";
+
 export function useHomeContent() {
   const stats = [
     { value: "2,000+", label: "Students Enrolled" },
@@ -7,27 +20,27 @@ export function useHomeContent() {
 
   const features = [
     {
-      icon: "ti-code",
+      icon: IconCode,
       title: "Web & App Development",
       desc: "Full stack web and mobile app development from scratch.",
     },
     {
-      icon: "ti-robot",
+      icon: IconRobot,
       title: "AI & Chatbot Dev",
       desc: "Build intelligent chatbots and AI-powered applications.",
     },
     {
-      icon: "ti-speakerphone",
+      icon: IconBrandGoogle,
       title: "Digital Marketing",
       desc: "SEO, social media, and growth hacking strategies.",
     },
     {
-      icon: "ti-palette",
+      icon: IconPalette,
       title: "Graphic Designing",
       desc: "Creative design for brands, print, and digital media.",
     },
     {
-      icon: "ti-shield-check",
+      icon: IconShieldLock,
       title: "Cybersecurity",
       desc: "Ethical hacking and network security fundamentals.",
     },
@@ -56,5 +69,12 @@ export function useHomeContent() {
     },
   ];
 
-  return { stats, features, steps };
+  const socials = [
+    { icon: IconBrandFacebook, href: "#" },
+    { icon: IconBrandTwitter, href: "#" },
+    { icon: IconBrandLinkedin, href: "#" },
+    { icon: IconBrandInstagram, href: "#" },
+    { icon: IconBrandYoutube, href: "#" },
+  ];
+  return { stats, features, steps, socials };
 }

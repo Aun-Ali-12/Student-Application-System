@@ -1,4 +1,4 @@
-import { SideNav } from "@/components/DashboardComponent/Navbar/SideNav";
+import { SideNav } from "@/components/admin/DashboardComponent/Navbar/SideNav";
 import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 
 export default async function AdminLayout({ children }) {

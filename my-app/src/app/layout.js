@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EditProvider } from "@/ContextApi/Edit";
 import { StudentProvider } from "@/ContextApi/StudentData";
+import { ViewTransitions } from "next-view-transitions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +25,13 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {/* context provider and nav  */}
+      {/* context provider   */}
       <body>
         <StudentProvider>
-          <EditProvider>{children}</EditProvider>
+          <EditProvider>
+            {/* for transition on link */}
+            <ViewTransitions>{children}</ViewTransitions>
+          </EditProvider>
         </StudentProvider>
       </body>
     </html>

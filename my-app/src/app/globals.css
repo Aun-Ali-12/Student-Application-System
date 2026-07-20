@@ -1,1 +1,25 @@
 @import "tailwindcss";
+/* Curtain/wipe effect */
+::view-transition-old(root) {
+  animation: 350ms ease-in both slide-out-left;
+}
+::view-transition-new(root) {
+  animation: 350ms ease-out both slide-in-right;
+}
+
+@keyframes slide-out-left {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

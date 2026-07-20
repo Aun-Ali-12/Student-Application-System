@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useHomeContent } from "../../../hooks/UI/useHomeContent";
+import { useHomeContent } from "../../../hooks/UI/Home/useHomeContent";
 
 export function Hero() {
   const { stats } = useHomeContent();

@@ -1,4 +1,4 @@
-import { useHomeContent } from "@/hooks/UI/useHomeContent";
+import { useHomeContent } from "@/hooks/UI/Home/useHomeContent";
 
 export function HowItWorks() {
   const { steps } = useHomeContent();

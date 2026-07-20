@@ -1,4 +1,4 @@
-import { useHomeContent } from "@/hooks/UI/useHomeContent";
+import { useHomeContent } from "@/hooks/UI/Home/useHomeContent";
 
 export function Features() {
   const { features } = useHomeContent();
@@ -21,22 +21,28 @@ export function Features() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {features.map((f, i) => (
-            <div
-              key={i}
-              className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition group"
-            >
-              <div className="w-10 h-10 bg-[#EEEDFE] rounded-[10px] flex items-center justify-center mb-4 group-hover:bg-[#5B4FCF] transition">
-                <i
-                  className={`ti ${f.icon} text-[#5B4FCF] group-hover:text-white transition`}
-                  style={{ fontSize: 20 }}
-                  aria-hidden="true"
-                />
+          {features.map((f, i) => {
+            const Icon = f.icon; // ← component variable mein lo
+            return (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition group"
+              >
+                <div className="w-10 h-10 bg-[#EEEDFE] rounded-[10px] flex items-center justify-center mb-4 group-hover:bg-[#5B4FCF] transition">
+                  <Icon
+                    size={20}
+                    className="text-[#5B4FCF] group-hover:text-white transition"
+                  />
+                </div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                  {f.title}
+                </h3>
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  {f.desc}
+                </p>
               </div>
-              <h3 className="text-sm font-600 text-gray-900 mb-2">{f.title}</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
