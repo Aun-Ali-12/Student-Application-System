@@ -227,7 +227,7 @@ export function Contact() {
               Apply now for free and take your first step towards a tech career.
             </p>
             <a
-              href="/#apply"
+              href="/form"
               className="inline-block bg-white text-[#5B4FCF] font-semibold px-8 py-3 rounded-full text-sm hover:bg-gray-50 transition"
             >
               Apply Now
