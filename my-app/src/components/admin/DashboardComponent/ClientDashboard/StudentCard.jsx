@@ -13,51 +13,73 @@ export const StudentDataTable = ({ data }) => {
 
   return (
     <>
-      <tr>
-        <td>{full_name}</td>
-        <td>{cnic}</td>
-        <td>{email}</td>
-        <td>{phone}</td>
-        <td>{course}</td>
-        <td>{data.campuses.name}</td>
-        <td className="relative group hover:cursor-pointer">
-          {status}
-          <div className="hidden group-hover:block absolute top-full left-0 bg-white z-10 border p-2 rounded">
-            <button
-              onClick={() => {
-                UpdateStatus("rejected", id);
-              }}
+      <tr className="hover:bg-[#F8F9FF] transition">
+        <td className="px-4 py-3 text-sm text-gray-900 font-medium">
+          {full_name}
+        </td>
+        <td className="px-4 py-3 text-sm text-gray-500">{cnic}</td>
+        <td className="px-4 py-3 text-sm text-gray-500">{email}</td>
+        <td className="px-4 py-3 text-sm text-gray-500">{phone}</td>
+        <td className="px-4 py-3 text-sm text-gray-500 capitalize">{course}</td>
+        <td className="px-4 py-3 text-sm text-gray-500">
+          {data.campuses?.name}
+        </td>
+
+        {/* Status */}
+        <td className="px-4 py-3">
+          <div className="relative group">
+            <span
+              className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full cursor-pointer capitalize
+        ${
+          status === "accepted"
+            ? "bg-green-50 text-green-700"
+            : status === "rejected"
+              ? "bg-red-50 text-red-700"
+              : "bg-yellow-50 text-yellow-700"
+        }
+      `}
             >
-              reject
-            </button>
-            <br />
-            <button
-              onClick={() => {
-                UpdateStatus("accepted", id);
-              }}
-            >
-              accept
-            </button>
+              {status}
+            </span>
+            {/* Status dropdown */}
+            <div className="hidden group-hover:flex flex-col gap-1 z-10 bg-white border border-gray-200 rounded-xl shadow-md p-2 min-w-[110px]">
+              <button
+                onClick={() => UpdateStatus("accepted", id)}
+                className="text-xs text-left px-3 py-1.5 rounded-lg text-green-700 hover:bg-green-50 transition"
+              >
+                ✓ Accept
+              </button>
+              <button
+                onClick={() => UpdateStatus("rejected", id)}
+                className="text-xs text-left px-3 py-1.5 rounded-lg text-red-600 hover:bg-red-50 transition"
+              >
+                ✕ Reject
+              </button>
+            </div>
           </div>
         </td>
-        <td className="relative group">
-          <button className="hover:cursor-pointer">manage</button>
-          <div className="hidden group-hover:block absolute top-full left-0 bg-white z-10 border p-2 rounded">
-            <button
-              onClick={() => {
-                handleDel(id);
-              }}
-            >
-              del
+
+        {/* Actions */}
+        <td className="px-4 py-3">
+          <div className="relative group">
+            <button className="text-xs font-medium text-[#5B4FCF] border border-[#5B4FCF] px-3 py-1.5 rounded-lg hover:bg-[#EEEDFE] transition">
+              Manage
             </button>
-            <br />
-            <button
-              onClick={() => {
-                handleEditStd(data);
-              }}
-            >
-              edit
-            </button>
+            {/* Actions dropdown */}
+            <div className="hidden group-hover:flex flex-col gap-1 bg-white border border-gray-200 rounded-xl shadow-md p-2 min-w-[100px]">
+              <button
+                onClick={() => handleEditStd(data)}
+                className="text-xs text-left px-3 py-1.5 rounded-lg text-gray-700 hover:bg-[#EEEDFE] hover:text-[#5B4FCF] transition"
+              >
+                ✎ Edit
+              </button>
+              <button
+                onClick={() => handleDel(id)}
+                className="text-xs text-left px-3 py-1.5 rounded-lg text-red-600 hover:bg-red-50 transition"
+              >
+                ✕ Delete
+              </button>
+            </div>
           </div>
         </td>
       </tr>

@@ -135,7 +135,10 @@ export const ApplicationStatus = () => {
           {/* Bottom link */}
           <p className="text-center text-xs text-gray-400 mt-5">
             Haven't applied yet?{" "}
-            <a href="/form" className="text-[#5B4FCF] font-medium hover:underline">
+            <a
+              href="/form"
+              className="text-[#5B4FCF] font-medium hover:underline"
+            >
               Apply Now
             </a>
           </p>

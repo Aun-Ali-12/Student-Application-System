@@ -15,11 +15,22 @@ export function AnalyticsRep({ studentData, role }) {
 
   return (
     <>
-      <div className="flex flex-col">
-        <PieCharts />
-        <BarCharts />
-        <LineCharts />
-        {role === "super_admin" ? <CampusBarCharts /> : ""}
+      <div className="p-2 space-y-6">
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Overview of all student applications
+          </p>
+        </div>
+
+        {/* Charts grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <PieCharts />
+          <BarCharts />
+          <LineCharts />
+          {role === "super_admin" ? <CampusBarCharts /> : ""}
+        </div>
       </div>
     </>
   );

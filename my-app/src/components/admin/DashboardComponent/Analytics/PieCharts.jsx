@@ -2,6 +2,7 @@ import { useStudent } from "@/ContextApi/StudentData";
 import { usePie } from "@/hooks/Dashboard/Analytics/usePie";
 import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { DateFilter } from "./DateFilter";
 
 export function PieCharts() {
   //usePie hook
@@ -15,58 +16,58 @@ export function PieCharts() {
 
   return (
     <>
-      <h1> Applications by Status</h1>
-      <div className="relative">
-        <button
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          Select by Date
-        </button>
-        {show && (
-          <div className="absolute top-full left-0 z-1 ">
-            From
-            <input
-              type="date"
-              value={filters.from}
-              onChange={(e) => {
-                setFilters((prev) => ({ ...prev, from: e.target.value }));
-              }}
-              name=""
-              id=""
-            />
-            To
-            <input
-              type="date"
-              name=""
-              id=""
-              value={filters.to}
-              onChange={(e) => {
-                setFilters((prev) => ({ ...prev, to: e.target.value }));
-              }}
-            />
+      <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        {/* Card header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-base font-semibold text-gray-900">
+              Applications by Status
+            </h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Overall status distribution
+            </p>
           </div>
-        )}
-      </div>
-      <div>
-        <PieChart width={400} height={300}>
-          <Pie
-            data={status}
-            cx={200}
-            cy={150}
-            innerRadius={60}
-            outerRadius={100}
-            dataKey="value"
-            label={({ name, value }) => `${name}: ${value}`}
-          >
-            {status.map((entry, index) => (
-              <Cell key={index} fill={PieColor[index]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
+
+          {/* Date filter*/}
+          <DateFilter
+            filters={filters}
+            setFilters={setFilters}
+            show={show}
+            setShow={setShow}
+          />
+        </div>
+
+        {/* Chart */}
+        <div className="flex justify-center">
+          <PieChart width={340} height={260}>
+            <Pie
+              data={status}
+              cx={170}
+              cy={120}
+              innerRadius={60}
+              outerRadius={100}
+              dataKey="value"
+              label={({ name, value }) => `${name}: ${value}`}
+              labelLine={false}
+            >
+              {status.map((entry, index) => (
+                <Cell key={index} fill={PieColor[index]} />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                borderRadius: 12,
+                border: "1px solid #E5E7EB",
+                fontSize: 12,
+              }}
+            />
+            <Legend
+              iconType="circle"
+              iconSize={8}
+              wrapperStyle={{ fontSize: 12 }}
+            />
+          </PieChart>
+        </div>
       </div>
     </>
   );
