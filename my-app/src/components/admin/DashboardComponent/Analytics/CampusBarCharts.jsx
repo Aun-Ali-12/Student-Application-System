@@ -1,51 +1,49 @@
-import { useStudent } from "@/ContextApi/StudentData";
-import { useCampusBar } from "@/hooks/Dashboard/Analytics/useCampusBar";
-import { useState } from "react";
+"use client";
 import {
   BarChart,
+  Bar,
   XAxis,
   YAxis,
-  Bar,
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 import { DateFilter } from "./DateFilter";
+import { useCampusBar } from "@/hooks/Dashboard/Analytics/useCampusBar";
+import { useStudent } from "@/ContextApi/StudentData";
 
-export function CampusBarCharts() {
-  const { filters, setFilters } = useStudent();
-  const [show, setShow] = useState(false);
+export function CampusBarCharts({ role }) {
   const { campusStats } = useCampusBar();
-  return (
-    <>
-      <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-        {/* Card header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="mb-6">
-            <h2 className="text-base font-semibold text-gray-900">
-              Applications by Course
-            </h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Which courses are most popular
-            </p>
-          </div>
+  const { filters, setFilters } = useStudent();
+  if (role !== "super_admin") return null;
 
-          {/* Date filter*/}
-          <DateFilter
-            filters={filters}
-            setFilters={setFilters}
-            show={show}
-            setShow={setShow}
-          />
+  return (
+    <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-5">
+        <div>
+          <h2 className="text-sm font-semibold text-gray-900">
+            Applications by Campus
+          </h2>
+          <p className="text-xs text-gray-400 mt-0.5">
+            Campus wise distribution
+          </p>
         </div>
-        {/* Chart */}
+        <DateFilter filters={filters} setFilters={setFilters} />
+      </div>
+
+      {/* Chart */}
+      <ResponsiveContainer width="100%" height={260}>
         <BarChart
-          width={440}
-          height={260}
           data={campusStats}
-          margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
+          margin={{ top: 5, right: 5, left: -20, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#F3F4F6"
+            vertical={false}
+          />
           <XAxis
             dataKey="name"
             tick={{ fontSize: 10, fill: "#9CA3AF" }}
@@ -62,8 +60,9 @@ export function CampusBarCharts() {
               borderRadius: 12,
               border: "1px solid #E5E7EB",
               fontSize: 12,
+              boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
             }}
-            cursor={{ fill: "#EEEDFE" }}
+            cursor={{ fill: "#DCFCE7" }}
           />
           <Legend
             iconType="circle"
@@ -72,13 +71,13 @@ export function CampusBarCharts() {
           />
           <Bar
             dataKey="value"
-            fill="#5B4FCF"
+            fill="#22c55e"
             name="Applications"
-            barSize={40}
+            barSize={36}
             radius={[6, 6, 0, 0]}
           />
         </BarChart>
-      </div>
-    </>
+      </ResponsiveContainer>
+    </div>
   );
 }

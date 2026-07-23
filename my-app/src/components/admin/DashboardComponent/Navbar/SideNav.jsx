@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   IconLayoutDashboard,
   IconUsers,
   IconSchool,
   IconChartBar,
   IconSettings,
-  IconLogout,
   IconChevronLeft,
   IconChevronRight,
   IconMenu2,
@@ -20,7 +19,7 @@ export function SideNav({ role }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const nav = useRouter();
   const navItems = [
     {
       label: "Dashboard",
@@ -36,7 +35,7 @@ export function SideNav({ role }) {
     },
     {
       label: "Manage Campuses",
-      href: "/dashboard/campuses",
+      href: "/dashboard/manage-campus",
       icon: IconSchool,
       superAdmin: true,
     },
@@ -57,7 +56,15 @@ export function SideNav({ role }) {
   const filtered = navItems.filter(
     (item) => !item.superAdmin || role === "super_admin",
   );
-
+  const handleLogOut = async () => {
+    const response = await LogOut();
+    if (!response) {
+      alert("Something went wrong");
+      return;
+    }
+    alert("logging out");
+    nav.push("/");
+  };
   return (
     <>
       {/* ── Mobile top bar ── */}
@@ -123,7 +130,7 @@ export function SideNav({ role }) {
           pathname={pathname}
           collapsed={collapsed}
           setMobileOpen={setMobileOpen}
-          handleLogOut={LogOut}
+          handleLogOut={handleLogOut}
         />
       </aside>
     </>

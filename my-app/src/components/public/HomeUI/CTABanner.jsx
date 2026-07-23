@@ -16,7 +16,7 @@ export function CTABanner() {
             through SMIT's free IT courses.
           </p>
           <Link
-            href="/#apply"
+            href="/form"
             className="inline-block bg-white text-[#5B4FCF] font-semibold px-8 py-3 rounded-full text-sm hover:bg-gray-50 transition"
           >
             Apply Now

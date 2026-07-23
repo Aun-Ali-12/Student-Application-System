@@ -23,7 +23,7 @@ export function Hero() {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                href="/#apply"
+                href="/form"
                 className="bg-[#5B4FCF] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[#7B6FDF] transition"
               >
                 Apply Now

@@ -89,43 +89,73 @@ export default function ClientCampus() {
 
   return (
     <>
-      <div>
-        <h1>Manage campus</h1>
+      <div className="space-y-6 mt-20 md:mt-10">
+        {/* Header */}
+        <div className="flex flex-col gap-10 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Manage Campuses
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Add, edit or remove campuses
+            </p>
+          </div>
 
-        {/* add campus form  */}
-        <form onSubmit={addCampus}>
-          <label htmlFor="c-name">enter campus name:</label>
-          <input
-            type="text"
-            value={isEdit ? editVal : newCampus}
-            onChange={handleChange}
-          />
-          <br />
-          {isEdit ? (
-            <button type="submit">Update</button>
-          ) : (
-            <button type="submit">{isAdded ? "loading.." : "Add"}</button>
-          )}
-        </form>
+          {/* Add/Edit form card */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <h2 className="text-sm font-semibold text-gray-900 mb-4">
+              {isEdit ? "Edit Campus" : "Add New Campus"}
+            </h2>
 
-        {/* remove button  */}
-        <div>
-          <h1>Existing Campuses</h1>
-          <button onClick={loadCampuses}>
-            {isShow ? "X" : "Show campuses"}
-          </button>
-          {isShow &&
-            campuses &&
-            campuses.map((c) => (
-              <ul key={c.id}>
-                <CampusCard
-                  data={c}
-                  handleDelete={handleDelete}
-                  handleEdit={handleEdit}
-                  isDelete={isDelete}
-                />
+            <form
+              onSubmit={addCampus}
+              className="flex flex-col sm:flex-row gap-3"
+            >
+              <input
+                type="text"
+                value={isEdit ? editVal : newCampus}
+                onChange={handleChange}
+                placeholder="Enter campus name"
+                className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5B4FCF] focus:border-transparent transition"
+              />
+              <button
+                type="submit"
+                className="bg-[#5B4FCF] text-white text-sm font-medium px-6 py-2.5 rounded-full hover:bg-[#7B6FDF] transition disabled:opacity-60 whitespace-nowrap"
+              >
+                {isEdit ? "Update" : isAdded ? "Adding..." : "Add Campus"}
+              </button>
+            </form>
+          </div>
+
+          {/* Existing campuses */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-gray-900">
+                Existing Campuses
+              </h2>
+              <button
+                onClick={loadCampuses}
+                className="text-xs font-medium text-[#5B4FCF] border border-[#5B4FCF] px-3 py-1.5 rounded-full hover:bg-[#EEEDFE] transition"
+              >
+                {isShow ? "Hide" : "Show Campuses"}
+              </button>
+            </div>
+
+            {isShow && (
+              <ul className="space-y-2">
+                {campuses &&
+                  campuses.map((c) => (
+                    <CampusCard
+                      key={c.id}
+                      data={c}
+                      handleDelete={handleDelete}
+                      handleEdit={handleEdit}
+                      isDelete={isDelete}
+                    />
+                  ))}
               </ul>
-            ))}
+            )}
+          </div>
         </div>
       </div>
     </>
