@@ -1,7 +1,7 @@
 "use client";
 
 import { StudentDataTable } from "./StudentCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStudent } from "@/ContextApi/StudentData";
 import { useEdit } from "@/ContextApi/Edit";
 import { useStudentForm } from "@/hooks/StudentForm";
@@ -9,9 +9,12 @@ import { FormUI } from "@/components/Form";
 import { Filters } from "./Filters";
 import { Pagination } from "./Pagination";
 import { usePagination } from "@/hooks/Dashboard/usePagination";
+import { Skeleton } from "@/components/loader/Skeleton";
+import { DashboardSkeleton } from "@/components/loader/DashboardSkeleton";
 
 export default function Dashboard({ studentData, role, campusName }) {
   //data from students context
+  const [load, setLoad] = useState(true);
   const { setData } = useStudent();
 
   //useStudenForm hook used for Editform ui component:
@@ -22,8 +25,11 @@ export default function Dashboard({ studentData, role, campusName }) {
   const { isEdit } = useEdit();
 
   useEffect(() => {
-    setData(studentData || []);
-  }, []);
+    if (studentData) {
+      setLoad(false);
+      setData(studentData || []);
+    }
+  }, [studentData]);
 
   //paginated data
   const {
@@ -34,6 +40,10 @@ export default function Dashboard({ studentData, role, campusName }) {
     setTotalItems,
     totalPages,
   } = usePagination();
+
+  if (load) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     <>
