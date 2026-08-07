@@ -9,8 +9,7 @@ import { FormUI } from "@/components/Form";
 import { Filters } from "./Filters";
 import { Pagination } from "./Pagination";
 import { usePagination } from "@/hooks/Dashboard/usePagination";
-import { Skeleton } from "@/components/loader/Skeleton";
-import { DashboardSkeleton } from "@/components/loader/DashboardSkeleton";
+import { DashboardSkeleton } from "@/components/admin/loader/Dashboard/DashboardSkeleton";
 
 export default function Dashboard({ studentData, role, campusName }) {
   //data from students context

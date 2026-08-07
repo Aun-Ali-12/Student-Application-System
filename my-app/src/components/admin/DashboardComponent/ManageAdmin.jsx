@@ -46,10 +46,6 @@ export default function ManageAdmins() {
     loadAdmins();
   }, []);
 
-  useEffect(() => {
-    console.log(admins);
-  }, [admins]);
-
   //admin data values setting on onchange handle
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -127,16 +123,15 @@ export default function ManageAdmins() {
     const response = await DeleteAdmins(id);
 
     if (!response) {
-      console.log("Not deleted");
+      alert("Not deleted");
       return;
     }
-    console.log("deleted!");
+    alert("deleted!");
     await loadAdmins();
   };
 
   //handle Edit:
   const handleEdit = (admin_id, name, campus_id) => {
-    console.log(admin_id, name, campus_id);
     setEditMode(true);
     setIsCreateAdmin(true); // to open form
     setEditData({

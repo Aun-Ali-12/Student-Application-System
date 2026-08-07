@@ -8,6 +8,7 @@ import { Navbar } from "./public/Navbar/Navbar";
 export default function Home() {
   return (
     <>
+      {/* Navbar */}
       <Navbar />
       {/* hero component  */}
       <Hero />

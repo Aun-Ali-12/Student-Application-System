@@ -56,6 +56,7 @@ export function SideNav({ role }) {
   const filtered = navItems.filter(
     (item) => !item.superAdmin || role === "super_admin",
   );
+
   const handleLogOut = async () => {
     const response = await LogOut();
     if (!response) {
@@ -95,7 +96,7 @@ export function SideNav({ role }) {
           pathname={pathname}
           collapsed={false}
           setMobileOpen={setMobileOpen}
-          handleLogOut={LogOut}
+          handleLogOut={handleLogOut}
         />
       </div>
 

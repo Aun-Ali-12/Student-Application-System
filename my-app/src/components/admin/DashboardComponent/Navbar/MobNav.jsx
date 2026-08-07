@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { IconLogout } from "@tabler/icons-react";
-import { LogOut } from "@/SupabaseApi/Login";
 
 // Mobile Nav Component
 export function MobileNav({
