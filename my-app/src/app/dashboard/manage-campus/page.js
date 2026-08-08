@@ -3,9 +3,10 @@ import ClientCampus from "@/components/admin/DashboardComponent/ManageCampuses";
 import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 import { redirect } from "next/navigation";
 
-export default async function ManageCampus({ role }) {
+export default async function ManageCampus() {
   const { profile } = await getAdminData();
 
+  // role check if role is not super_admin then redirect to dashboard
   if (profile.role !== "super_admin") {
     redirect("/dashboard");
   }

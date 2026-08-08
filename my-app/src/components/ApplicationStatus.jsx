@@ -1,4 +1,5 @@
 import useCheckStatus from "@/hooks/useCheckStatus";
+import Texture from "./textureStyles/Texture";
 
 //Application status checker component
 export const ApplicationStatus = () => {
@@ -7,6 +8,7 @@ export const ApplicationStatus = () => {
   return (
     <>
       <section className="min-h-screen bg-[#F8F9FF] flex items-center justify-center py-16 px-4">
+        <Texture />
         <div className="w-full max-w-lg">
           {/* Header */}
           <div className="text-center mb-10">
@@ -30,10 +32,11 @@ export const ApplicationStatus = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="42101-1234567-1"
+                  placeholder="4210112345671 "
                   value={cnic}
                   onChange={(e) => setCnic(e.target.value)}
                   required
+                  maxLength={13}
                   className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5B4FCF] focus:border-transparent transition"
                 />
               </div>
