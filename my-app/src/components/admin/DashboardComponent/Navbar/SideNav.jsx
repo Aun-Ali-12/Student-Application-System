@@ -14,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { LogOut } from "@/SupabaseApi/Login";
 import { MobileNav } from "./MobNav";
+import Swal from "sweetalert2";
 
 export function SideNav({ role }) {
   const pathname = usePathname();
@@ -63,7 +64,12 @@ export function SideNav({ role }) {
       alert("Something went wrong");
       return;
     }
-    alert("logging out");
+    Swal.fire({
+      title: "Success!",
+      text: "Signed out.",
+      icon: "success",
+      confirmButtonText: "Okay",
+    });
     nav.push("/");
   };
   return (

@@ -8,6 +8,7 @@ import {
 import { FetchCampus } from "@/SupabaseApi/FetchCampus";
 import { useState } from "react";
 import { CampusCard } from "./CampusCard";
+import Swal from "sweetalert2";
 
 export default function ClientCampus() {
   const [newCampus, setNewCampus] = useState("");
@@ -27,44 +28,75 @@ export default function ClientCampus() {
     }
   };
 
+  //loading campuses
+  const loadCampuses = async () => {
+    setIsShow(!isShow);
+    const response = await FetchCampus();
+    setCampuses(response.data || []);
+  };
+
   //add campus handle
   const addCampus = async (e) => {
     e.preventDefault();
+
+    // validation
+    if (!newCampus) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please make sure to fill out an empty field.",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
+      return;
+    }
+
     if (!isEdit) {
       setIsAdded(true);
       try {
         const addCampusFunc = await AddCampus(newCampus);
         if (!addCampusFunc) {
-          alert(addCampusFunc.error);
+          Swal.fire({
+            title: "Error!",
+            text: "Couldn't created, Please try again!",
+            icon: "error",
+            confirmButtonText: "Try Again",
+          });
           return;
         }
+        Swal.fire({
+          title: "Success!",
+          text: "Campus added successfully!",
+          icon: "success",
+          confirmButtonText: "Okay",
+        });
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
       } finally {
         setIsAdded(false);
         setNewCampus("");
       }
     }
     if (isEdit) {
-      console.log("editing kareyngay");
       const response = await UpdateCampus(editId, editVal);
       if (!response) {
         console.log(response.error);
         return;
       }
-      alert("Campus Updated successfully..");
-      console.log(response);
+      Swal.fire({
+        title: "Success!",
+        text: "Campus updated successfully!",
+        icon: "success",
+        confirmButtonText: "Okay",
+      });
       setIsEdit(false);
       setEditVal("");
       await loadCampuses();
     }
-  };
-
-  //loading campuses
-  const loadCampuses = async () => {
-    setIsShow(!isShow);
-    const response = await FetchCampus();
-    setCampuses(response.data || []);
   };
 
   //delete campus handle
@@ -76,6 +108,12 @@ export default function ClientCampus() {
       return;
     }
     setIsDelete(null);
+    Swal.fire({
+      title: "Success!",
+      text: "Campus deleted successfully!",
+      icon: "success",
+      confirmButtonText: "Okay",
+    });
     await loadCampuses();
   };
 
@@ -122,7 +160,7 @@ export default function ClientCampus() {
                 type="submit"
                 className="bg-[#5B4FCF] text-white text-sm font-medium px-6 py-2.5 rounded-full hover:bg-[#7B6FDF] transition disabled:opacity-60 whitespace-nowrap"
               >
-                {isEdit ? "Update" : isAdded ? "Adding..." : "Add Campus"}
+                {isEdit ? "Update" : isAdded ? "Creating..." : "Create Campus"}
               </button>
             </form>
           </div>

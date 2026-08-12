@@ -54,7 +54,7 @@ export function About() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 cursor-pointer">
             {values.map((v, i) => {
               const Icon = v.icon;
               return (
@@ -138,7 +138,7 @@ export function About() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 cursor-pointer">
             {team.map((t, i) => (
               <div
                 key={i}

@@ -8,6 +8,7 @@ import {
   UpdateStudents,
 } from "@/SupabaseApi/FetchCampus";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export function useStudentForm() {
   const [form, setForm] = useState({
@@ -50,10 +51,14 @@ export function useStudentForm() {
       if (!isEdit) {
         const response = await InsertStudents(form);
         if (!response.success) {
-          alert("User already exists with this cnic");
+          Swal.fire({
+            title: "Error!",
+            text: "Cnic already in use, try any other.",
+            icon: "error",
+            confirmButtonText: "Try Again",
+          });
           return;
         }
-        alert("Data is submitted");
         setForm({
           full_name: "",
           cnic: "",
@@ -62,24 +67,45 @@ export function useStudentForm() {
           course: "",
           campus_id: "",
         });
+        Swal.fire({
+          title: "Success!",
+          text: "Data successfully submitted.",
+          icon: "success",
+          confirmButtonText: "Okay",
+        });
       }
 
       //If edit mode? then
       if (isEdit) {
         const response = await UpdateStudents(editData);
         if (!response.success) {
-          alert(response.error);
+          Swal.fire({
+            title: "Error!",
+            text: response.error,
+            icon: "error",
+            confirmButtonText: "Try Again",
+          });
           return;
         }
-        alert("Updated");
         setData((prev) =>
           prev.map((s) => (s.id === editData.id ? { ...s, ...editData } : s)),
         );
         resetEdit();
         setIsEdit(false);
+        Swal.fire({
+          title: "Success!",
+          text: "Save changes successfully updated.",
+          icon: "success",
+          confirmButtonText: "Okay",
+        });
       }
     } catch (err) {
-      console.log("didn't get the response from function", err);
+      Swal.fire({
+        title: "Error!",
+        text: err,
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
     } finally {
       setLoading(false);
     }

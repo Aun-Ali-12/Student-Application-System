@@ -5,12 +5,13 @@ import { useLogin } from "@/hooks/useLogin";
 
 //Login form component:
 export function LoginForm() {
-  const { form, loading, error, handleChange, handleSubmit } = useLogin();
+  const { form, loading, error, success, handleChange, handleSubmit } =
+    useLogin();
   const [showPass, setShowPass] = useState(false);
 
   return (
     <section className="min-h-screen bg-[#F8F9FF] flex items-center justify-center py-16 px-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md fade-in">
         {/* Header */}
         <div className="text-center mb-10">
           <div className="w-14 h-14 bg-[#EEEDFE] rounded-2xl flex items-center justify-center mx-auto mb-5">
@@ -92,6 +93,12 @@ export function LoginForm() {
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
                 <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
+
+            {success && (
+              <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+                <p className="text-sm text-green-600">{success}</p>
               </div>
             )}
 

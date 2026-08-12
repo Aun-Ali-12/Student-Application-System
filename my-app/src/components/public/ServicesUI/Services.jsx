@@ -25,7 +25,7 @@ export function Services() {
       {/* Perks */}
       <section className="py-14 bg-[#F8F9FF]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 cursor-pointer">
             {perks.map((p, i) => {
               const Icon = p.icon;
               return (
@@ -64,7 +64,7 @@ export function Services() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 cursor-pointer">
             {services.map((s, i) => {
               const Icon = s.icon;
               return (
@@ -100,7 +100,7 @@ export function Services() {
                   </p>
 
                   {/* Features list */}
-                  <ul className="space-y-2 mb-5">
+                  <ul className="space-y-2 mb-5 cursor-pointer">
                     {s.features.map((f, j) => (
                       <li
                         key={j}

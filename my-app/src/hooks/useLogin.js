@@ -16,6 +16,7 @@ export function useLogin() {
 
   //any error which will get after login click, show that message in this state
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   //handle used to setting up the values which're being taking out from form fields
   const handleChange = (e) => {
@@ -37,9 +38,10 @@ export function useLogin() {
       setError(response.error);
     } else {
       //no error; send admin to dashbaord page
+      setSuccess("Login succesfully!");
       window.location.replace("/dashboard");
     }
     setLoading(false); //resets loading state to its initial state
   };
-  return { form, loading, error, handleChange, handleSubmit };
+  return { form, loading, error, success, handleChange, handleSubmit };
 }

@@ -8,6 +8,7 @@ import {
   EditAdmin,
   FetchAdmins,
 } from "@/SupabaseApi/Dashboard/ManageAdmins";
+import Swal from "sweetalert2";
 
 export default function ManageAdmins() {
   const [campuses, setCampuses] = useState([]);
@@ -74,7 +75,12 @@ export default function ManageAdmins() {
         !adminForm.password ||
         !adminForm.campus_id
       ) {
-        alert("Add all fields");
+        Swal.fire({
+          title: "Error!",
+          text: "Please make sure to fill out an empty field.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
         setLoading(false);
         return;
       }
@@ -84,7 +90,12 @@ export default function ManageAdmins() {
         setLoading(false);
         return;
       }
-      setSuccess("Admin has been created successfully!");
+      Swal.fire({
+        title: "Success!",
+        text: "Admin created successfully!",
+        icon: "success",
+        confirmButtonText: "Okay",
+      });
     }
 
     //editmode true:
@@ -96,7 +107,12 @@ export default function ManageAdmins() {
         !editData.password ||
         !editData.campus_id
       ) {
-        alert("Add all fields");
+        Swal.fire({
+          title: "Error!",
+          text: "Please make sure to fill out an empty field.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
         setLoading(false);
         return;
       }
@@ -105,7 +121,12 @@ export default function ManageAdmins() {
         alert(response.error);
         return;
       }
-      alert(response.success);
+      Swal.fire({
+        title: "Success!",
+        text: "Admin updated successfully!",
+        icon: "success",
+        confirmButtonText: "Okay",
+      });
     }
     setLoading(false);
     setIsCreateAdmin(false);
@@ -123,10 +144,20 @@ export default function ManageAdmins() {
     const response = await DeleteAdmins(id);
 
     if (!response) {
-      alert("Not deleted");
+      Swal.fire({
+        title: "Error!",
+        text: "Something wen't wrong. Try again!",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
       return;
     }
-    alert("deleted!");
+    Swal.fire({
+      title: "Success!",
+      text: "Admin removed successfully!",
+      icon: "success",
+      confirmButtonText: "Okay",
+    });
     await loadAdmins();
   };
 

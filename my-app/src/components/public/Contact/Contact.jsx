@@ -44,7 +44,7 @@ export function Contact() {
       {/* Info cards */}
       <section className="py-14">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 cursor-pointer">
             {contactInfo.map((c, i) => {
               const Icon = c.icon;
               return (
