@@ -46,7 +46,7 @@ export default function Dashboard({ studentData, role, campusName }) {
 
   return (
     <>
-      <div className="p-1 space-y-6">
+      <div className="p-1 space-y-6 fade-in">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

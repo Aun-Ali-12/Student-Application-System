@@ -12,7 +12,7 @@ export default async function ManageCampus() {
   }
   return (
     <>
-      <div className="m-10 md:m-2 space-y-6">
+      <div className="m-10 md:m-2 space-y-6 fade-in">
         <ClientCampus />
         <ManageAdmins />
       </div>

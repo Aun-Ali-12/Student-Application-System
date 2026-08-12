@@ -9,7 +9,7 @@ export const ApplicationStatus = () => {
     <>
       <section className="min-h-screen bg-[#F8F9FF] flex items-center justify-center py-16 px-4">
         <Texture />
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-lg fade-in">
           {/* Header */}
           <div className="text-center mb-10">
             <span className="inline-block bg-[#EEEDFE] text-[#5B4FCF] text-xs font-medium px-3 py-1 rounded-full mb-4">

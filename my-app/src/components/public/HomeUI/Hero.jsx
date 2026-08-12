@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useHomeContent } from "../../../hooks/UI/Home/useHomeContent";
+import { Counter } from "./HeroCounter";
 
 export function Hero() {
   const { stats } = useHomeContent();
@@ -57,11 +58,11 @@ export function Hero() {
         {/* Stats bar */}
         <div className="mt-16 bg-white border border-gray-200 rounded-2xl px-8 py-6 grid grid-cols-3 gap-4">
           {stats.map((s, i) => (
-            <div
-              key={i}
-              className={`text-center ${i !== stats.length - 1 ? "border-r border-gray-100" : ""}`}
-            >
-              <div className="text-2xl font-bold text-gray-900">{s.value}</div>
+            <div key={i} className="text-center">
+              <div className="text-2xl font-bold text-gray-900">
+                <Counter target={s.value} duration={1500} />
+                {s.suffix}
+              </div>
               <div className="text-sm text-gray-500 mt-1">{s.label}</div>
             </div>
           ))}

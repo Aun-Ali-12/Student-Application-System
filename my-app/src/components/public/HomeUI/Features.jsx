@@ -20,9 +20,9 @@ export function Features() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 cursor-pointer">
           {features.map((f, i) => {
-            const Icon = f.icon; // ← component variable mein lo
+            const Icon = f.icon;
             return (
               <div
                 key={i}

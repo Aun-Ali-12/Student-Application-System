@@ -40,7 +40,7 @@ export function MobileNav({
         <button
           onClick={handleLogOut}
           title={collapsed ? "Logout" : ""}
-          className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white transition ${collapsed ? "justify-center" : ""}`}
+          className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-white/70 hover:bg-white/10 hover:text-white transition ${collapsed ? "justify-center" : ""} cursor-pointer`}
         >
           <IconLogout size={20} className="shrink-0" />
           {!collapsed && <span>Logout</span>}

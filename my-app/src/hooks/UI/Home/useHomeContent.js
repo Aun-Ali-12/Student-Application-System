@@ -13,9 +13,9 @@ import {
 
 export function useHomeContent() {
   const stats = [
-    { value: "2,000+", label: "Students Enrolled" },
-    { value: "15+", label: "Campuses" },
-    { value: "95%", label: "Success Rate" },
+    { value: 2000, label: "Students Enrolled", suffix: "+" },
+    { value: 15, label: "Campuses", suffix: "+" },
+    { value: 95, label: "Success Rate", suffix: "%" },
   ];
 
   const features = [
