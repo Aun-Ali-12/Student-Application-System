@@ -9,7 +9,7 @@ export const CampusCard = ({ data, handleDelete, isDelete, handleEdit }) => {
         </td>
 
         {/* Buttons */}
-        <td className="px-4 py-3 text-sm font-medium text-gray-900 capitalize">
+        <td className="flex gap-2 px-4 py-3 text-sm font-medium text-gray-900 capitalize">
           <button
             onClick={() => handleEdit(id, name)}
             className="text-xs font-medium text-[#5B4FCF] border border-[#5B4FCF] px-3 py-1.5 rounded-full hover:bg-[#EEEDFE] transition"
