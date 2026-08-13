@@ -57,7 +57,7 @@ export const StudentDataTable = ({ data }) => {
                 />
 
                 {/* Dropdown — position absolute, layout disturb nahi hoga */}
-                <div className="absolute right-0 top-full mt-1 z-20 bg-white border border-gray-200 rounded-xl shadow-lg p-2 min-w-[110px]">
+                <div className="absolute right-0 top-full mt-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg p-2 min-w-[110px]">
                   <button
                     onClick={() => UpdateStatus("rejected", id)}
                     className="text-xs text-left w-full px-3 py-1.5 rounded-lg text-red-600 hover:bg-red-50 transition"
@@ -94,8 +94,7 @@ export const StudentDataTable = ({ data }) => {
                   onClick={() => setShowActions(false)}
                 />
 
-                {/* Dropdown — position absolute, layout disturb nahi hoga */}
-                <div className="absolute right-0 top-full mt-1 z-20 bg-white border border-gray-200 rounded-xl shadow-lg p-2 min-w-[110px]">
+                <div className="absolute right-0 top-full mt-1 z-50 bg-white border border-gray-200 rounded-xl shadow-lg p-2 min-w-[110px]">
                   <button
                     onClick={() => {
                       handleEditStd(data);

@@ -6,6 +6,7 @@ import {
 } from "@/SupabaseApi/Dashboard/ManageApplication";
 import { useStudent } from "@/ContextApi/StudentData";
 import { LogOut } from "@/SupabaseApi/Login";
+import Swal from "sweetalert2";
 
 export function ManageDashboard() {
   const { setData } = useStudent();
@@ -16,7 +17,6 @@ export function ManageDashboard() {
       alert("Logout failed, please try again");
       return;
     }
-    alert("logging out");
     window.location.replace("/login");
   };
 
@@ -31,7 +31,12 @@ export function ManageDashboard() {
     setData((prev) =>
       prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)),
     );
-    alert("Status update successfully!");
+    Swal.fire({
+      title: "Success!",
+      text: "Application status updated successfully!",
+      icon: "success",
+      confirmButtonText: "Okay",
+    });
   };
 
   const handleDel = async (id) => {
@@ -43,7 +48,12 @@ export function ManageDashboard() {
     }
     //updating state to render updated data in UI
     setData((prev) => prev.filter((s) => s.id !== id));
-    alert("Application deleted successfully");
+    Swal.fire({
+      title: "Success!",
+      text: "Application successfully deleted!",
+      icon: "success",
+      confirmButtonText: "Okay",
+    });
   };
   return { handleLogOut, UpdateStatus, handleDel };
 }

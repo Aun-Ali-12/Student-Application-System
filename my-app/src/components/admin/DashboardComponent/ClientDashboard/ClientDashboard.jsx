@@ -10,6 +10,7 @@ import { Filters } from "./Filters";
 import { Pagination } from "./Pagination";
 import { usePagination } from "@/hooks/Dashboard/usePagination";
 import { DashboardSkeleton } from "@/components/admin/loader/Dashboard/DashboardSkeleton";
+import { StudentCardMob } from "./StdCardMob";
 
 export default function Dashboard({ studentData, role, campusName }) {
   //data from students context
@@ -23,13 +24,6 @@ export default function Dashboard({ studentData, role, campusName }) {
   //useEdit context
   const { isEdit } = useEdit();
 
-  useEffect(() => {
-    if (studentData) {
-      setLoad(false);
-      setData(studentData || []);
-    }
-  }, [studentData]);
-
   //paginated data
   const {
     PaginatedData,
@@ -40,13 +34,20 @@ export default function Dashboard({ studentData, role, campusName }) {
     totalPages,
   } = usePagination();
 
+  useEffect(() => {
+    if (studentData) {
+      setLoad(false);
+      setData(studentData || []);
+    }
+  }, [studentData]);
+
   if (load) {
     return <DashboardSkeleton />;
   }
 
   return (
     <>
-      <div className="p-1 space-y-6 fade-in">
+      <div className="mt-15 md:mt-0 p-1 space-y-6 fade-in">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -61,12 +62,14 @@ export default function Dashboard({ studentData, role, campusName }) {
         </div>
 
         {/* Filters */}
+        {/* <div className="flex flex-wrap"> */}
         <Filters />
+        {/* </div> */}
 
         {/* Table */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
           <div className="overflow-x-auto overflow-y-visible">
-            <table className="w-full text-sm capitalize relative">
+            <table className="hidden md:block w-full text-sm capitalize relative">
               <thead>
                 <tr className="bg-[#F8F9FF] border-b border-gray-200">
                   <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">
@@ -112,6 +115,12 @@ export default function Dashboard({ studentData, role, campusName }) {
                 )}
               </tbody>
             </table>
+
+            <div className="md:hidden space-y-3">
+              {PaginatedData.map((d) => (
+                <StudentCardMob key={d.id} data={d} />
+              ))}
+            </div>
           </div>
         </div>
 

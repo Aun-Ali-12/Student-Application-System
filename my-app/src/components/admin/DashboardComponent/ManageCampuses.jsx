@@ -178,10 +178,20 @@ export default function ClientCampus() {
                 {isShow ? "Hide" : "Show Campuses"}
               </button>
             </div>
-
-            {isShow && (
-              <ul className="space-y-2">
-                {campuses &&
+            <table className="w-full text-sm">
+              <thead>
+                <tr>
+                  <td className="text-left text-xs font-semibold text-gray-500 px-4 py-3">
+                    Campus Name
+                  </td>
+                  <td className="text-left text-xs font-semibold text-gray-500 px-4 py-3">
+                    Actions
+                  </td>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {isShow &&
+                  campuses &&
                   campuses.map((c) => (
                     <CampusCard
                       key={c.id}
@@ -191,8 +201,8 @@ export default function ClientCampus() {
                       isDelete={isDelete}
                     />
                   ))}
-              </ul>
-            )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
