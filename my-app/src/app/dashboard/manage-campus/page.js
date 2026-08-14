@@ -1,4 +1,4 @@
-import ManageAdmins from "@/components/admin/DashboardComponent/ManageAdmin";
+import ManageAdmins from "@/components/admin/DashboardComponent/Manage-Admin/ManageAdmin";
 import ClientCampus from "@/components/admin/DashboardComponent/ManageCampuses";
 import { getAdminData } from "@/lib/AuthCheck/getAdminData";
 import { redirect } from "next/navigation";
