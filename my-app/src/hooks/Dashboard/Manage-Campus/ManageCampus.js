@@ -35,18 +35,17 @@ export function ManageCampus() {
   const addCampus = async (e) => {
     e.preventDefault();
 
-    // validation
-    if (!newCampus) {
-      Swal.fire({
-        title: "Error!",
-        text: "Please make sure to fill out an empty field.",
-        icon: "error",
-        confirmButtonText: "Try Again",
-      });
-      return;
-    }
-
     if (!isEdit) {
+      // validation
+      if (!newCampus) {
+        Swal.fire({
+          title: "Error!",
+          text: "Please make sure to fill out an empty field.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+        return;
+      }
       setIsAdded(true);
       try {
         const addCampusFunc = await AddCampus(newCampus);
@@ -78,6 +77,16 @@ export function ManageCampus() {
       }
     }
     if (isEdit) {
+      // validation
+      if (!editVal) {
+        Swal.fire({
+          title: "Error!",
+          text: "Please make sure to fill out an empty field.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+        return;
+      }
       const response = await UpdateCampus(editId, editVal);
       if (!response) {
         console.log(response.error);
