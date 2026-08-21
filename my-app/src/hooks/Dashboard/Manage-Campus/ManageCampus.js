@@ -1,10 +1,11 @@
+"use client";
 import {
   AddCampus,
   DeleteCampus,
   UpdateCampus,
 } from "@/SupabaseApi/Dashboard/ManageCampus";
 import { FetchCampus } from "@/SupabaseApi/FetchCampus";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Swal from "sweetalert2";
 export function ManageCampus() {
   const [newCampus, setNewCampus] = useState("");
@@ -15,6 +16,7 @@ export function ManageCampus() {
   const [editVal, setEditVal] = useState(""); //handles edit value
   const [editId, setEditId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const formRef = useRef(); //to trigger form on edit
 
   const handleChange = (e) => {
     if (isEdit) {
@@ -145,5 +147,6 @@ export function ManageCampus() {
     handleChange,
     handleDelete,
     handleEdit,
+    formRef,
   };
 }

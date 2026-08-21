@@ -1,24 +1,24 @@
-"use client"
+"use client";
 import { ManageCampus } from "@/hooks/Dashboard/Manage-Campus/ManageCampus";
 import { CampusCard } from "./CampusCard";
 
-export default function CampusForm() {
-  const {
-    isEdit,
-    setIsEdit,
-    addCampus,
-    editVal,
-    isAdded,
-    loadCampuses,
-    isShow,
-    setIsShow,
-    campuses,
-    newCampus,
-    isDelete,
-    handleChange,
-    handleDelete,
-    handleEdit,
-  } = ManageCampus();
+export default function CampusForm({
+  isEdit,
+  setIsEdit,
+  addCampus,
+  editVal,
+  isAdded,
+  loadCampuses,
+  isShow,
+  setIsShow,
+  campuses,
+  newCampus,
+  isDelete,
+  handleChange,
+  handleDelete,
+  handleEdit,
+  formRef,
+}) {
   return (
     <>
       <div>
@@ -52,7 +52,11 @@ export default function CampusForm() {
             )}
           </div>
         </div>
-        <form onSubmit={addCampus} className="flex flex-col sm:flex-row gap-3">
+        <form
+          onSubmit={addCampus}
+          ref={formRef}
+          className="flex flex-col sm:flex-row gap-3"
+        >
           <input
             type="text"
             value={isEdit ? editVal : newCampus}
